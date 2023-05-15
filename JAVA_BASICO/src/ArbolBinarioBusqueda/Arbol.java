@@ -51,75 +51,49 @@ public class Arbol {
     }
     
     void eliminar(int dato) {
-    	if (this.raiz == null) {
-    		System.out.println("El Arbol esta vacio");
-    	}else {
-    		eliminar2(this.raiz, dato);
-    	}
+        if (this.raiz == null) {
+            System.out.println("El Árbol está vacío");
+        } else {
+            this.raiz = eliminar2(this.raiz, dato);
+        }
     }
-    
-    private void eliminar2(Nodo padre,int dato) {
-    	//El nodo donde estoy parado es el nodo a eliminar
-    	if(padre.getDato() == dato) {
-    		System.out.println("Encontro el nodo y esta parado sobre el: "+padre.getDato());
-    	//El hijo derecho es el nodo a eliminar
-    	}else if(padre.getDerecho().getDato() == dato) {
-    		System.out.println("Encontro el nodo y es el hijo derecho: "+padre.getDerecho().getDato());
-    		Nodo aux = padre.getDerecho();
-    		//El hijo derecho tiene hijos
-    		if (aux.getDerecho() != null || aux.getIzquierdo() != null) {
-    			aux = eliminarNodoPadre(aux,dato);
-    			padre.setDerecho(aux);
-    		//El hijo no tiene hijos
-    		}else {
-    			padre.setDerecho(null);
-    		}
-    	//El hijo izquierdo es el nodo a eliminar
-    	}else if(padre.getIzquierdo().getDato() == dato) {
-    		System.out.println("Encontro el nodo y es el hijo izquierdo: "+padre.getIzquierdo().getDato());
-    		Nodo aux = padre.getIzquierdo();
-    		//El hijo derecho tiene hijos
-    		if (aux.getDerecho() != null || aux.getIzquierdo() != null) {
-    			aux = eliminarNodoPadre(aux,dato);
-    			padre.setIzquierdo(aux);
-    		//El hijo no tiene hijos
-    		}else {
-    			padre.setIzquierdo(null);
-    		}
-    		
-    	}else {
-    		//El nodo esta a la derecha
-        	if(padre.getDato() < dato) {
-        		eliminar2(padre.getDerecho(),dato);
-        	//El nodo esta a la izquierda
-        	}else {
-        		eliminar2(padre.getIzquierdo(),dato);
-        	}
-    	}
+
+    private Nodo eliminar2(Nodo nodo, int dato) {
+        if (nodo == null) {
+            return null;
+        }
+        
+        if (dato < nodo.getDato()) {
+            nodo.setIzquierdo(eliminar2(nodo.getIzquierdo(), dato));
+        } else if (dato > nodo.getDato()) {
+            nodo.setDerecho(eliminar2(nodo.getDerecho(), dato));
+        } else {
+            // Caso 1: El nodo es una hoja (no tiene hijos)
+            if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
+                return null;
+            }
+            // Caso 2: El nodo tiene un solo hijo (derecho o izquierdo)
+            if (nodo.getIzquierdo() == null) {
+                return nodo.getDerecho();
+            }
+            if (nodo.getDerecho() == null) {
+                return nodo.getIzquierdo();
+            }
+            // Caso 3: El nodo tiene dos hijos
+            Nodo sucesor = encontrarSucesor(nodo.getDerecho());
+            nodo.setDato(sucesor.getDato());
+            nodo.setDerecho(eliminar2(nodo.getDerecho(), sucesor.getDato()));
+        }
+        
+        return nodo;
     }
-    
-    private Nodo eliminarNodoPadre(Nodo padre,int dato) {
-    	System.out.println("Entraste a la funcion Nodo Padre");
-    	//El hijo tiene hijo derecho y no tiene izquierdo
-		if(padre.getDerecho() != null && padre.getIzquierdo() == null) {
-			return padre.getDerecho();
-		//El hijo tiene hijo izquierdo y no tiene hijo derecho
-		}else if(padre.getIzquierdo() !=null && padre.getDerecho() == null) {
-			return padre.getIzquierdo();
-		//El hijo tiene ambos hijos derecho y izquierdo
-		}else{
-			Nodo sucesor = encontrarSucesor(padre.getDerecho());
-			sucesor.setIzquierdo(padre.getIzquierdo());
-			return sucesor;
-		}
-    }
-    
-    private Nodo encontrarSucesor(Nodo n) {
-    	Nodo actual = n;
-    	while (actual.getIzquierdo() != null) {
-    		actual = actual.getIzquierdo();
-    	}
-    	return actual;
+
+    private Nodo encontrarSucesor(Nodo nodo) {
+        Nodo actual = nodo;
+        while (actual.getIzquierdo() != null) {
+            actual = actual.getIzquierdo();
+        }
+        return actual;
     }
     
     
