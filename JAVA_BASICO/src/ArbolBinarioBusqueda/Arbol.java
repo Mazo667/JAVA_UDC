@@ -57,7 +57,8 @@ public class Arbol {
             this.raiz = eliminar2(this.raiz, dato);
         }
     }
-
+    
+    
     private Nodo eliminar2(Nodo nodo, int dato) {
         if (nodo == null) {
             return null;
