@@ -54,71 +54,72 @@ public class Arbol {
     	if (this.raiz == null) {
     		System.out.println("El Arbol esta vacio");
     	}else {
-    		this.eliminar(this.raiz, dato);
+    		eliminar2(this.raiz, dato);
     	}
     }
     
-    private void eliminar(Nodo padre,int dato) {
+    private void eliminar2(Nodo padre,int dato) {
     	//El nodo donde estoy parado es el nodo a eliminar
-    if(padre.getDato() == dato) {
-    	//El nodo tiene hijos
-    	if(padre.getDerecho() != null || padre.getIzquierdo() != null) {
-    		//El hijo derecho es el que hay que eliminar
-    		if(padre.getDerecho().getDato() == dato) {
-       			Nodo aux = padre.getDerecho();
-       			//El hijo tiene hijos
-       			if(aux.getDerecho() !=null || aux.getIzquierdo() !=null) {
-       				aux = eliminarNodoPadre(aux,dato);
-       				padre.setDerecho(aux);
-       			//El hijo no tiene hijos
-       			}else {
-       				padre.setDerecho(null);
-       			}
-    		//El hijo izquierdo es el que hay que eliminar
-    			}else if(padre.getIzquierdo().getDato() == dato) {
-    				Nodo aux = padre.getIzquierdo();
-    				//El hijo tiene hijos
-           			if(aux.getDerecho() !=null || aux.getIzquierdo() !=null) {
-           				aux = eliminarNodoPadre(aux,dato);
-           				padre.setIzquierdo(aux);
-           			//El hijo no tiene hijos
-           			}else {
-           				padre.setIzquierdo(null);
-           			}
-    			}
-    		//El nodo no tiene hijos y es el dato
+    	if(padre.getDato() == dato) {
+    		System.out.println("Encontro el nodo y esta parado sobre el: "+padre.getDato());
+    	//El hijo derecho es el nodo a eliminar
+    	}else if(padre.getDerecho().getDato() == dato) {
+    		System.out.println("Encontro el nodo y es el hijo derecho: "+padre.getDerecho().getDato());
+    		Nodo aux = padre.getDerecho();
+    		//El hijo derecho tiene hijos
+    		if (aux.getDerecho() != null || aux.getIzquierdo() != null) {
+    			aux = eliminarNodoPadre(aux,dato);
+    			padre.setDerecho(aux);
+    		//El hijo no tiene hijos
+    		}else {
+    			padre.setDerecho(null);
+    		}
+    	//El hijo izquierdo es el nodo a eliminar
+    	}else if(padre.getIzquierdo().getDato() == dato) {
+    		System.out.println("Encontro el nodo y es el hijo izquierdo: "+padre.getIzquierdo().getDato());
+    		Nodo aux = padre.getIzquierdo();
+    		//El hijo derecho tiene hijos
+    		if (aux.getDerecho() != null || aux.getIzquierdo() != null) {
+    			aux = eliminarNodoPadre(aux,dato);
+    			padre.setIzquierdo(aux);
+    		//El hijo no tiene hijos
+    		}else {
+    			padre.setIzquierdo(null);
+    		}
+    		
     	}else {
-        	if (padre.getDerecho() == null &&
-        		padre.getIzquierdo() == null && 
-        		padre.getDato() == dato) {
-        		this.raiz = null;
+    		//El nodo esta a la derecha
+        	if(padre.getDato() < dato) {
+        		eliminar2(padre.getDerecho(),dato);
+        	//El nodo esta a la izquierda
+        	}else {
+        		eliminar2(padre.getIzquierdo(),dato);
         	}
-    	}	
-    //El nodo donde estoy parado no es el nodo a eliminar sigo la recursion
-    }else {
-    	//El nodo esta a la derecha
-    	if(padre.getDato()< dato) {
-    		eliminar(padre.getDerecho(),dato);
-    	//El nodo esta a la izquierda
-    	}else {
-    		eliminar(padre.getIzquierdo(),dato);
     	}
-    	
-    	}
-   }
+    }
     
     private Nodo eliminarNodoPadre(Nodo padre,int dato) {
+    	System.out.println("Entraste a la funcion Nodo Padre");
     	//El hijo tiene hijo derecho y no tiene izquierdo
-		if(padre.getDerecho()!= null && padre.getIzquierdo() == null) {
+		if(padre.getDerecho() != null && padre.getIzquierdo() == null) {
 			return padre.getDerecho();
 		//El hijo tiene hijo izquierdo y no tiene hijo derecho
-		}else if(padre.getIzquierdo()!=null && padre.getDerecho() == null) {
+		}else if(padre.getIzquierdo() !=null && padre.getDerecho() == null) {
 			return padre.getIzquierdo();
 		//El hijo tiene ambos hijos derecho y izquierdo
 		}else{
-			return padre.getIzquierdo();
+			Nodo sucesor = encontrarSucesor(padre.getDerecho());
+			sucesor.setIzquierdo(padre.getIzquierdo());
+			return sucesor;
 		}
-		
+    }
+    
+    private Nodo encontrarSucesor(Nodo n) {
+    	Nodo actual = n;
+    	while (actual.getIzquierdo() != null) {
+    		actual = actual.getIzquierdo();
+    	}
+    	return actual;
     }
     
     
