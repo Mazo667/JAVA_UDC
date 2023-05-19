@@ -33,7 +33,7 @@ public class ConexionBasica {
 			while(rs.next() ) {
 				String apellido = rs.getString("apellido");
 				String nombre = rs.getString("apellido");
-				System.out.println(apellido+", "+nombre);
+				System.out.println(apellido+",  "+nombre);
 			}
 			
 		}catch(Exception e) {
