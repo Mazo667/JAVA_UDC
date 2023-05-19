@@ -1,7 +1,7 @@
 package BaseDeDatosJDBC;
 
 import java.sql.*;
-import java.nio.charset.CoderMalfunctionError;
+
 
 public class ConexionBasica {
 
