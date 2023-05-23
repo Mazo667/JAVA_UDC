@@ -29,7 +29,7 @@ public class ConexionBasica {
 			pstm = con.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			
-			System.out.println("apellido   |  nombre   ");
+			System.out.println("apellido | nombre");
 			while(rs.next() ) {
 				String apellido = rs.getString("apellido");
 				String nombre = rs.getString("apellido");
@@ -49,7 +49,5 @@ public class ConexionBasica {
 				throw new RuntimeException(e);
 			}
 		}
-
 	}
-
 }
