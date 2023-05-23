@@ -26,7 +26,9 @@ public class ConexionBasica {
 			con = DriverManager.getConnection(url, usr, pwd);
 			
 			String sql="SELECT apellido,nombre FROM cliente";
+			
 			pstm = con.prepareStatement(sql);
+			//Ejecuto una Query o Consulta
 			rs = pstm.executeQuery();
 			
 			System.out.println("apellido | nombre");
