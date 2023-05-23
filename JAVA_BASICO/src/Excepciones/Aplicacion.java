@@ -10,7 +10,7 @@ public class Aplicacion {
 		try {
 		//Leemos el archivo
 			Properties prop = new Properties();
-			String filename =  "C:\\Users\\MAXIMILIANO\\git\\JAVA_BASICO\\JAVA_BASICO\\src\\Excepciones\\usuario.properties";
+			String filename =  "/home/maximiliano/git/JAVA_UDC/JAVA_BASICO/src/Excepciones/usuario.properties";
 			fis = new FileInputStream(filename);
 			prop.load(fis);
 		//	System.out.println(prop.getProperty("usename"));
@@ -18,6 +18,7 @@ public class Aplicacion {
 		//Leemos el valor username y password
 		String usr = prop.getProperty("username");
 		String pwd = prop.getProperty("password");
+		
 		
 		Usuario usuario = null;
 		
