@@ -58,8 +58,6 @@ public class JDBC_InsertarFila {
 				System.out.println("Ocurrio un error");
 			}
 			
-			
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
