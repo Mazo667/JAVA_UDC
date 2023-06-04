@@ -10,6 +10,7 @@ public class JdbcUtil {
 		try {
 			//nos aseguramos si la conexion es nula o esta cerrada
 			if(con==null || con.isClosed()) {
+				//Tambien podremos cargar los datos con Properties
 			// el driver
 			String drv = "org.postgresql.Driver";
 			//la cadena de conexion
