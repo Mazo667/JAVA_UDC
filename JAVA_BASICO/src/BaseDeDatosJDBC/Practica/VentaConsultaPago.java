@@ -94,7 +94,6 @@ public class VentaConsultaPago {
 							producto+"  | "+total+"  | "+ven+"     |  Efectivo");
 				}
 				
-				
 			}
 			
 		}catch(Exception e) {
