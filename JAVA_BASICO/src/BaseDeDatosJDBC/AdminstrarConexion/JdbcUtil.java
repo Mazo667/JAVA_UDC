@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class JdbcUtil {
-	public static Connection getConnection() {		
+	//Utilizamos SINGLETON para garantizar una unica instancia de la conexion
+	private static Connection con = null;
+	public static Connection getConnection() {	
 		try {
+			//nos aseguramos si la conexion es nula o esta cerrada
+			if(con==null || con.isClosed()) {
 			// el driver
 			String drv = "org.postgresql.Driver";
 			//la cadena de conexion
@@ -16,9 +20,11 @@ public class JdbcUtil {
 			String pwd= "admin";
 			//registro el driver
 			Class.forName(drv);
-			return DriverManager.getConnection(url,usr,pwd);
 			//Con esto podremos instanciar la conexion sin la necesidad de escribir
 			//todas las lineas
+			con = DriverManager.getConnection(url, usr, pwd);
+			}
+			return con;
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
