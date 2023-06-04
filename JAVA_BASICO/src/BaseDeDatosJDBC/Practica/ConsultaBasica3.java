@@ -27,7 +27,7 @@ public class ConsultaBasica3 {
 			//establezco la conexion
 			con = DriverManager.getConnection(url, usr, pwd);
 			
-			String sql= "SELECT localidad.nombre,SUM(total) FROM VENTA "+
+			String sql= "SELECT localidad.nombre,SUM(cantidad) FROM VENTA "+
 						"JOIN cliente ON venta.cliente = cliente.numero_documento "+
 						"JOIN localidad ON cliente.localidad = localidad.codigo "+
 						"GROUP BY localidad.nombre;";
@@ -41,7 +41,7 @@ public class ConsultaBasica3 {
 			while(rs.next() ) {
 				String local = rs.getString("nombre");
 				Float sum = rs.getFloat("sum");
-				System.out.println(local+"\t\t"+sum);
+				System.out.println(local+"\t"+sum);
 			}
 			
 		}catch(Exception e) {
