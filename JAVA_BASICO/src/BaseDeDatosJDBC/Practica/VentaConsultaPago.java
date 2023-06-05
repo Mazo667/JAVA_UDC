@@ -11,8 +11,6 @@ import java.util.GregorianCalendar;
 
 public class VentaConsultaPago {
 	
-	
-
 	public static void main(String[] args) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -32,12 +30,11 @@ public class VentaConsultaPago {
 			//establezco la conexion
 			con = DriverManager.getConnection(url, usr, pwd);
 			
-			
 			//Seteo la fecha que quiero obtener
 			GregorianCalendar gc = new GregorianCalendar();
 			gc.set(Calendar.YEAR,2015);
 			gc.set(Calendar.MONTH,8-1);
-			gc.set(Calendar.DAY_OF_MONTH,1);
+			gc.set(Calendar.DAY_OF_MONTH,01);
 			
 			long ts = gc.getTimeInMillis();
 			Date fecha = new Date(ts);
@@ -67,33 +64,23 @@ public class VentaConsultaPago {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			String sql ="SELECT * FROM venta "
-					+"WHERE FECHA = ? AND vendedor = ?;";
+			String sql = "SELECT vendedor.nombre, venta.fecha, tarjeta.nombre AS tarjeta FROM venta "
+					+ "JOIN vendedor ON venta.vendedor = vendedor.codigo "
+					+ "JOIN tarjeta ON venta.tarjeta = tarjeta.codigo "
+					+ "WHERE vendedor.codigo = ? AND venta.fecha = ? ;";
 			pstm = con.prepareStatement(sql);
-			pstm.setDate(1, d);
-			pstm.setString(2, vendedor);
+			pstm.setDate(2, d);
+			pstm.setString(1, vendedor);
+			System.out.println(con.getClass().getCanonicalName());
 			//Ejecuto el Update
 			rs = pstm.executeQuery();
 			
-			System.out.println("ID  |  FECHA   | CLIENTE  | CANTIDAD | PRODUCTO | TOTAL  | VENDEDOR | TARJETA");
-			while(rs.next() ) {
-				int id = rs.getInt("id");
+			System.out.println("Nombre			| Numero Venta			| Metodo de Pago");
+			while(rs.next()) {
+				String nombre = rs.getString("nombre");
 				Date fecha = rs.getDate("fecha");
-				int cliente = rs.getInt("cliente");
-				int cant = rs.getInt("cantidad");
-				String producto = rs.getString("producto");
-				Float total = rs.getFloat("total");
-				String ven = rs.getString("vendedor");
-				int tar = rs.getInt("tarjeta");
-				
-				if(tar != 0) {
-					System.out.println(id+"|"+fecha+"| "+cliente+" |    "+cant+"    |   "+
-							producto+"  | "+total+" | "+ven+"      |  "+tar);
-				}else {
-					System.out.println(id+"|"+fecha+"| "+cliente+" |    "+cant+"    |   "+
-							producto+"  | "+total+"  | "+ven+"     |  Efectivo");
-				}
-				
+				String pago = rs.getString("tarjeta");
+				System.out.println(nombre+"		"+fecha+"		"+pago);
 			}
 			
 		}catch(Exception e) {
