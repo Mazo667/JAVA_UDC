@@ -64,9 +64,9 @@ public class VentaConsultaPago {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT vendedor.nombre, venta.fecha, tarjeta.nombre AS tarjeta FROM venta "
+			String sql = "SELECT vendedor.nombre, venta.fecha, COALESCE(tarjeta.nombre, 'EFECTIVO') AS tarjeta FROM venta "
 					+ "JOIN vendedor ON venta.vendedor = vendedor.codigo "
-					+ "JOIN tarjeta ON venta.tarjeta = tarjeta.codigo "
+					+ "LEFT JOIN tarjeta ON venta.tarjeta = tarjeta.codigo "
 					+ "WHERE vendedor.codigo = ? AND venta.fecha = ? ;";
 			pstm = con.prepareStatement(sql);
 			pstm.setDate(2, d);
