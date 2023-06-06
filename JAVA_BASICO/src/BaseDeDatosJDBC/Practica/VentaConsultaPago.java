@@ -75,7 +75,7 @@ public class VentaConsultaPago {
 			//Ejecuto el Update
 			rs = pstm.executeQuery();
 			
-			System.out.println("Nombre			| Numero Venta			| Metodo de Pago");
+			System.out.println("Nombre			| Fecha Venta			| Metodo de Pago");
 			while(rs.next()) {
 				String nombre = rs.getString("nombre");
 				Date fecha = rs.getDate("fecha");
