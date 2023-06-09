@@ -8,7 +8,9 @@ public class MainConexion {
 
 	public static void main(String[] args) {
 		try {
-			Connection con = JdbcUtil2.getConnection();
+			//Connection con = JdbcUtil1.getConnection();//Singleton
+			//Connection con = JdbcUtil2.getConnection(); //PROPERTIES
+			Connection con = JdbcUtil3.getConnection();	//Shutdownhook
 			
 			String sql="SELECT apellido,nombre FROM cliente";
 			PreparedStatement pstm = con.prepareStatement(sql);
