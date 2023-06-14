@@ -1,14 +1,16 @@
 package BaseDeDatosJDBC.EncapsulamientoAccesoDatos;
-
+import java.util.Calendar;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import BaseDeDatosJDBC.AdminstrarConexion.JdbcUtil;
+import BaseDeDatosJDBC.AdminstrarConexion.JdbcUtil4;
 
-public class MainInsert {
-	public static void main(String[] args) throws SQLException {
+public class MainEncapsularConexion {
+	public static void main(String[] args) {
+		Transaction trx = JdbcUtil4.beginTransaction();
 		ClienteDAO dao = new ClienteDAO();
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.set(Calendar.YEAR,1955);
@@ -28,7 +30,6 @@ public class MainInsert {
 		cli.setSexo("M");
 		
 		dao.insertar(cli);
-		//Connection con = JdbcUtil3.getConnection();
-		//con.commit();
+		trx.commit();
 	}
 }
