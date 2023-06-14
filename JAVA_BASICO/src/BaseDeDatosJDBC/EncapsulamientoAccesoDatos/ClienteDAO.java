@@ -3,6 +3,7 @@ package BaseDeDatosJDBC.EncapsulamientoAccesoDatos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 
 import BaseDeDatosJDBC.AdminstrarConexion.JdbcUtil;
 
@@ -49,4 +50,41 @@ public class ClienteDAO {
 			}
 		}
 	}
+	public void insertar(Cliente cli) {
+		PreparedStatement pstm = null;
+		String sql="INSERT INTO cliente "+ ""
+				+"(numero_documento,apellido,nombre,fecha_nacimiento,sexo,domicilio,localidad) "+
+				"VALUES (?,?,?,?,?,?,?)";
+		try {
+			Connection con = JdbcUtil.getConnection();
+			pstm = con.prepareStatement(sql);
+			//Asigno los valores
+			pstm.setInt(1,cli.getDni());
+			pstm.setString(2, cli.getApellido());
+			pstm.setString(3, cli.getNombre());
+			pstm.setDate(4, (java.sql.Date) cli.getFechaNac());
+			pstm.setString(5, cli.getSexo());
+			pstm.setString(6, cli.getDomicilio());
+			pstm.setInt(7, cli.getLocalidad());
+			//Ejecuto el update
+			int rtdo =  pstm.executeUpdate();
+			
+			if(rtdo==1) {
+				System.out.println("El cliente se inserto Correctamente");
+			}else {
+				throw new RuntimeException("Error en el insert");
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}finally {
+			try {
+				if(pstm!= null) pstm.close();
+			}catch(Exception e){
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
 }

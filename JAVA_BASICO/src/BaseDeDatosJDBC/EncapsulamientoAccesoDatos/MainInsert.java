@@ -26,7 +26,6 @@ public class MainInsert {
 		cli.setFechaNac(d);
 		cli.setLocalidad(2);
 		cli.setSexo("M");
-		
 		dao.insertar(cli);
 		//Connection con = JdbcUtil3.getConnection();
 		//con.commit();
