@@ -12,12 +12,12 @@ public class ClienteDAO {
 	public Cliente find(int idCliente) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		String sql="SELECT numero_documento,apellido,nombre,fecha_nacimiento,"
-				+ "sexo,domicilio,localidad,total_compras "
-				+ "FROM cliente "
-				+ "WHERE numero_documento = ? ;";
 		
 		try {
+			String sql="SELECT numero_documento,apellido,nombre,fecha_nacimiento,"
+					+ "sexo,domicilio,localidad,total_compras "
+					+ "FROM cliente "
+					+ "WHERE numero_documento = ? ;";
 			Connection con = JdbcUtil.getConnection();
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, idCliente);
